@@ -1,0 +1,22 @@
+name: Build Windows iso
+on:
+  repository_dispatch:
+    inputs:
+      uupurl:
+        description: 'uup script url'
+        required: true
+        
+jobs:
+  build:
+    runs-os: windows-latest
+    steps:
+      - run: |
+          wget -c "${{ github.event.inputs.uupurl }}" -O uup.zip
+          unzip uup.zip
+          ./uup_download_windows.cmd
+      - name: Upload to Google Drive
+          uses: satackey/action-google-drive@v1
+          with:
+            skicka-tokencache-json: ${{ secrets.SKICKA_TOKENCACHE_JSON }}
+            upload-from: ./*.iso
+            upload-to: /windows
