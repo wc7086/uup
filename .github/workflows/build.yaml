@@ -5,7 +5,8 @@ on:
       uupurl:
         description: 'uup script url'
         required: true
-        
+        default: 'none'
+
 jobs:
   build:
     runs-on: windows-latest
