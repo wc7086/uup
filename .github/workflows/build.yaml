@@ -1,6 +1,6 @@
 name: Build Windows iso
 on:
-  repository_dispatch:
+  workflow_dispatch:
     inputs:
       uupurl:
         description: 'uup script url'
