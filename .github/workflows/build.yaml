@@ -21,7 +21,7 @@ jobs:
     - name: Upload firmware to WeTransfer
       run: |
         curl -fsSL git.io/file-transfer | sh
-        file = $(find *.iso)
+        file = $(find *.ISO)
         ./transfer wet -s -p 16 --no-progress ${file} 2>&1 | tee wetransfer.log
         echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
         echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
