@@ -11,7 +11,7 @@ jobs:
     runs-on: windows-latest
     steps:
     - run: |
-        curl "${{ github.event.inputs.uupurl }}" -O uup.zip
+        curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip uup.zip
         ./uup_download_windows.cmd
     - name: Upload to Google Drive
