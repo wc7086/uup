@@ -18,11 +18,12 @@ jobs:
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip uup.zip
         echo 0 | sudo bash ./uup_download_linux.sh
+        echo "ISO=$(find *.ISO)" >> $GITHUB_ENV
     - name: Upload to Google Drive
       uses: satackey/action-google-drive@v1
       with:
         skicka-tokencache-json: ${{ secrets.SKICKA_TOKENCACHE_JSON }}
-        upload-from: ./*.ISO
+        upload-from: ./${{ env.ISO }}
         upload-to: /windows
 
         # For those who set up Google Drive API client ID and secret themselves
