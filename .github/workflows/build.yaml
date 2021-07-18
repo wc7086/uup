@@ -11,13 +11,13 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
-      - run: |
-          wget -c "${{ github.event.inputs.uupurl }}" -O uup.zip
-          unzip uup.zip
-          ./uup_download_windows.cmd
-      - name: Upload to Google Drive
-        uses: satackey/action-google-drive@v1
-        with:
-          skicka-tokencache-json: ${{ secrets.SKICKA_TOKENCACHE_JSON }}
-          upload-from: ./*.iso
-          upload-to: /windows
+    - run: |
+        wget -c "${{ github.event.inputs.uupurl }}" -O uup.zip
+        unzip uup.zip
+        ./uup_download_windows.cmd
+    - name: Upload to Google Drive
+      uses: satackey/action-google-drive@v1
+      with:
+        skicka-tokencache-json: ${{ secrets.SKICKA_TOKENCACHE_JSON }}
+        upload-from: ./*.iso
+        upload-to: /windows
