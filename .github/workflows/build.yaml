@@ -18,10 +18,14 @@ jobs:
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip uup.zip
         echo 0 | sudo bash ./uup_download_linux.sh
-    - name: Upload firmware to WeTransfer
-      run: |
-        curl -fsSL git.io/file-transfer | sh
-        file = $(find *.ISO)
-        ./transfer wet -s -p 16 --no-progress ${file} 2>&1 | tee wetransfer.log
-        echo "::warning file=wetransfer.com::$(cat wetransfer.log | grep https)"
-        echo "::set-output name=url::$(cat wetransfer.log | grep https | cut -f3 -d" ")"
+    - name: Upload to Google Drive
+      uses: satackey/action-google-drive@v1
+      with:
+        skicka-tokencache-json: ${{ secrets.SKICKA_TOKENCACHE_JSON }}
+        upload-from: ./*.iso
+        upload-to: /windows
+
+        # For those who set up Google Drive API client ID and secret themselves
+        google-client-id: ${{ secrets.GOOGLE_CLIENT_ID }}
+        google-client-secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
+
