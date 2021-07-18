@@ -8,12 +8,12 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: ubuntu-latest
     steps:
     - run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip uup.zip
-        echo 0 | ./uup_download_windows.cmd
+        echo 0 | ./uup_download_linux.sh
     - name: Upload to Google Drive
       uses: satackey/action-google-drive@v1
       with:
