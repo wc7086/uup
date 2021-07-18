@@ -13,7 +13,7 @@ jobs:
     - run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip uup.zip
-        echo 0 | sudo ./uup_download_linux.sh
+        echo 0 | sudo bash ./uup_download_linux.sh
     - name: Upload to Google Drive
       uses: satackey/action-google-drive@v1
       with:
