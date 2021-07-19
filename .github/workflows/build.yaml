@@ -23,4 +23,4 @@ jobs:
         unzip -oq curl.zip
         $tmp=Get-ChildItem curl*mingw -Name
         Set-Alias realcurl $tmp\bin\curl.exe
-        realcurl -#T ./{{ env.$ISO }} https://transfer.sh/${{ env.ISO }}
+        realcurl -#T ./${{ env.ISO }} https://transfer.sh/${{ env.ISO }}
