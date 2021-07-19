@@ -19,4 +19,8 @@ jobs:
         echo "$ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
     - name: upload
       run: |
-        curl --upload-file ./{{ env.$ISO }} https://transfer.sh/${{ env.ISO }}
+        wget -c https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip -O curl.zip
+        unzip curl.zip
+        $tmp=Get-ChildItem curl*mingw -Name
+        $curl=$tmp\bin\curl.exe
+        $curl --upload-file ./{{ env.$ISO }} https://transfer.sh/${{ env.ISO }}
