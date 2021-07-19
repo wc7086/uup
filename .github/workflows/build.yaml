@@ -27,4 +27,4 @@ jobs:
         echo "{ISO}=$ISO" >> $GITHUB_ENV
     - name: upload
       run: |
-        curl -#T ./${Env:ISO} https://transfer.sh/${Env:ISO}
+        curl -#T ./${{ env.ISO }} https://transfer.sh/${{ env.ISO }}
