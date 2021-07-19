@@ -20,7 +20,7 @@ jobs:
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
-        new-item dwajinfoaiwnwgiha.ISO -type file
+        echo "test" > wdaiwgnaxa.ISO
         $PATH=$(pwd).Path
         $ISO=Get-ChildItem *.ISO -Name
         echo "PATH=$PATH" >> $GITHUB_ENV
