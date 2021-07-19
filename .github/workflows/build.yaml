@@ -16,14 +16,9 @@ jobs:
         unzip uup.zip
         echo 0 | ./uup_download_windows.cmd
         echo "$ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
-    - name: Upload to Google Drive
-      uses: satackey/action-google-drive@v1
+    - name: Upload to gdrive
+      uses: team-tumbleweed/gdrive-upload-action@main
       with:
-        skicka-tokencache-json: ${{ secrets.SKICKA_TOKENCACHE_JSON }}
-        upload-from: ./${{ env.ISO }}
-        upload-to: /windows/${{ env.ISO }}
-
-        # For those who set up Google Drive API client ID and secret themselves
-        google-client-id: ${{ secrets.GOOGLE_CLIENT_ID }}
-        google-client-secret: ${{ secrets.GOOGLE_CLIENT_SECRET }}
-
+        filename: "${{ env.ISO }}"
+        folderId: ${{ secrets.folderId }}
+        credentials: ${{ secrets.credentials }}
