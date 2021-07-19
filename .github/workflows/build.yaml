@@ -20,7 +20,7 @@ jobs:
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
-        echo wajignwad >> wdjiagw.ISO
+        echo 0 | .\uup_download_windows.cmd
         $PATH=$(pwd).Path
         $ISO=Get-ChildItem *.ISO -Name
         echo "PATH=$PATH" >> $GITHUB_ENV
