@@ -17,7 +17,6 @@ jobs:
         echo 0 | ./uup_download_windows.cmd
         echo "$path=$(pwd).Path" >> $GITHUB_ENV
         echo "$ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
-    - uses: actions/upload-artifact@v2
-      with:
-        name: ${{ env.ISO }}
-        path: ${{ env.path }}\${{ env.ISO }}
+    - name: upload
+      run: |
+        curl --upload-file ./$ISO https://transfer.sh/$ISO
