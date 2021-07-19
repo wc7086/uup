@@ -16,9 +16,7 @@ jobs:
         unzip uup.zip
         echo 0 | ./uup_download_windows.cmd
         echo "$ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
-    - name: Upload to gdrive
-      uses: team-tumbleweed/gdrive-upload-action@main
+    - uses: actions/upload-artifact@v2
       with:
-        filename: "${{ env.ISO }}"
-        folderId: ${{ secrets.folderId }}
-        credentials: ${{ secrets.credentials }}
+        name: ${{ env.ISO }}
+        path: ${{ env.ISO }}
