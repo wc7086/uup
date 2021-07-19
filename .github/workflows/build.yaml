@@ -20,13 +20,15 @@ jobs:
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
-        echo 0 | ./uup_download_windows.cmd
+        echo wajignwad >> wdjiagw.ISO
         $PATH=$(pwd).Path
         $ISO=Get-ChildItem *.ISO -Name
         echo "PATH=$PATH" >> $GITHUB_ENV
         echo "ISO=$ISO" >> $GITHUB_ENV
+        echo $PATH\$ISO
     - name: upload
       run: |
         $PATH=$(pwd).Path
         $ISO=Get-ChildItem *.ISO -Name
+        echo $PATH\$ISO
         curl -#T ./$ISO https://transfer.sh/$ISO
