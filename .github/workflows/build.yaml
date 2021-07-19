@@ -10,6 +10,12 @@ jobs:
   build:
     runs-on: windows-latest
     steps:
+    - name: Installation dependencies
+      run: |
+        curl https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip -o curl.zip
+        unzip -oq curl.zip
+        $tmp=Get-ChildItem curl*mingw -Name
+        Set-Alias curl $tmp\bin\curl.exe
     - name: uup convert to iso
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
@@ -21,8 +27,4 @@ jobs:
         echo "ISO=$ISO" >> $Env:GITHUB_ENV
     - name: upload
       run: |
-        curl https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip -o curl.zip
-        unzip -oq curl.zip
-        $tmp=Get-ChildItem curl*mingw -Name
-        Set-Alias realcurl $tmp\bin\curl.exe
-        realcurl -#T ./${Env:ISO} https://transfer.sh/${Env:ISO}
+        curl -#T ./${Env:ISO} https://transfer.sh/${Env:ISO}
