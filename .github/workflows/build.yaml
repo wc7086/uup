@@ -5,6 +5,10 @@ on:
       uupurl:
         description: 'uup script url'
         required: true
+      uupapp:
+        description: 'uup app (uupdump/uupad)'
+        required: true
+        default: 'uupdump'
 
 jobs:
   build:
@@ -17,10 +21,21 @@ jobs:
         $tmp=Get-ChildItem curl*mingw -Name
         Set-Alias curl $tmp\bin\curl.exe
     - name: uup convert to iso
+      if: ${{ github.event.inputs.uupapp == uupdump }}
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
+    - name: uup convert to iso
+      if: ${{ github.event.inputs.uupapp == uupad }}
+      run: |
+        $PATH=$(pwd).Path
+        $ISO=Get-ChildItem *.ISO -Name
+        mkdir C:\uup
+        cd C:\uup
+        curl "${{ github.event.inputs.uupurl }}" -o uup.cmd
+        echo 0 | .\uup.cmd
+        Move-Item $
     - name: out iso version
       run: |
         Get-ChildItem *.ISO -Name
