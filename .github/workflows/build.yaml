@@ -31,4 +31,4 @@ jobs:
         $PATH=$(pwd).Path
         $ISO=Get-ChildItem *.ISO -Name
         echo $PATH\$ISO
-        curl -#T ./$ISO https://transfer.sh/$ISO
+        curl -#T $PATH\$ISO https://transfer.sh/$ISO
