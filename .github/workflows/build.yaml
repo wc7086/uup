@@ -19,4 +19,4 @@ jobs:
         echo "$ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
     - name: upload
       run: |
-        curl --upload-file ./$ISO https://transfer.sh/$ISO
+        curl --upload-file ./{{ env.$ISO }} https://transfer.sh/${{ env.ISO }}
