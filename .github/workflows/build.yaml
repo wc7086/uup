@@ -21,13 +21,13 @@ jobs:
         $tmp=Get-ChildItem curl*mingw -Name
         Set-Alias curl $tmp\bin\curl.exe
     - name: uup convert to iso
-      if: （github.event.inputs.uupapp == "uupdump"）
+      if: ${{ github.event.inputs.uupapp }} == "uupdump"
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
     - name: uup convert to iso
-      if: （github.event.inputs.uupapp == "uuprg"）
+      if: ${{ github.event.inputs.uupapp }} == "uuprg"
       run: |
         $PATH=$(pwd).Path
         $ISO=Get-ChildItem *.ISO -Name
