@@ -19,7 +19,7 @@ jobs:
         echo "$ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
     - name: upload
       run: |
-        wget -c https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip -O curl.zip
+        curl https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip -o curl.zip
         unzip curl.zip
         $tmp=Get-ChildItem curl*mingw -Name
         Set-Alias realcurl $tmp\bin\curl.exe
