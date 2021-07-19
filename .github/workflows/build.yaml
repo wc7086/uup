@@ -23,8 +23,8 @@ jobs:
         touch dwajinfoaiwnwgiha.ISO
         $path=$(pwd).Path
         $ISO=Get-ChildItem *.ISO -Name
-        echo "path=$path" >> $Env:GITHUB_ENV
-        echo "ISO=$ISO" >> $Env:GITHUB_ENV
+        echo "path=$path" >> $GITHUB_ENV
+        echo "ISO=$ISO" >> $GITHUB_ENV
     - name: upload
       run: |
         curl -#T ./${Env:ISO} https://transfer.sh/${Env:ISO}
