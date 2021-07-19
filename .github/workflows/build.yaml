@@ -13,14 +13,14 @@ jobs:
     - name: uup convert to iso
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
-        unzip uup.zip
+        unzip -oq uup.zip
         echo 0 | ./uup_download_windows.cmd
         echo "$path=$(pwd).Path" >> $GITHUB_ENV
         echo "$ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
     - name: upload
       run: |
         curl https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip -o curl.zip
-        unzip curl.zip
+        unzip -oq curl.zip
         $tmp=Get-ChildItem curl*mingw -Name
         Set-Alias realcurl $tmp\bin\curl.exe
         realcurl -T ./{{ env.$ISO }} https://transfer.sh/${{ env.ISO }}
