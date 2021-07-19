@@ -15,8 +15,8 @@ jobs:
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | ./uup_download_windows.cmd
-        echo "path=$(pwd).Path" >> $GITHUB_ENV
-        echo "ISO=Get-ChildItem *.ISO -Name" >> $GITHUB_ENV
+        echo "path=$(pwd).Path" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
+        echo "ISO=Get-ChildItem *.ISO -Name" | Out-File -FilePath $Env:GITHUB_ENV -Encoding utf-8 -Append
     - name: upload
       run: |
         curl https://curl.se/windows/dl-7.77.0_3/curl-7.77.0_3-win64-mingw.zip -o curl.zip
