@@ -30,11 +30,11 @@ jobs:
       if: github.event.inputs.uupapp == 'uuprg'
       run: |
         $PATH=$(pwd).Path
-        $ISO=Get-ChildItem *.ISO -Name
         mkdir C:\uup
         cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.cmd
         echo 0 | .\uup.cmd
+        $ISO=Get-ChildItem *.ISO -Name
         Move-Item $ISO $PATH
     - name: out iso version
       run: |
