@@ -27,5 +27,4 @@ jobs:
     - name: upload
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        echo $ISO
         curl -#T $ISO https://transfer.sh/$ISO
