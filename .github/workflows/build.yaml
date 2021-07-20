@@ -41,7 +41,7 @@ jobs:
         $ISO=Get-ChildItem *.ISO -Name
         Move-Item $ISO $PATH
     - name: test
-      if: github.event.inputs.uupadpp == 'test'
+      if: github.event.inputs.uupapp == 'test'
       run: |
         fsutil file createnew test.ISO 805306368
     - name: out iso version
