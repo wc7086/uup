@@ -24,13 +24,13 @@ jobs:
         unzip -oq curl.zip
         $tmp=Get-ChildItem curl*mingw -Name
         Set-Alias curl $tmp\bin\curl.exe
-    - name: uup convert to iso
+    - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
-    - name: uup convert to iso
+    - name: uuprg uup convert to iso
       if: github.event.inputs.uupapp == 'uuprg'
       run: |
         $PATH=$(pwd).Path
@@ -40,10 +40,14 @@ jobs:
         echo 0 | .\uup.cmd
         $ISO=Get-ChildItem *.ISO -Name
         Move-Item $ISO $PATH
+    - name: test
+      if: github.event.inputs.uupadpp == 'test'
+      run: |
+        fsutil file createnew test.ISO 805306368
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        echo $ISO | Get-ChildItem | % {[int]($_.length / 1MB)} | echo MB
+        (Get-Item $ISO).Length/1MB
     - name: upload
       run: |
         $ISO=Get-ChildItem *.ISO -Name
