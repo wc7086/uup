@@ -42,4 +42,4 @@ jobs:
     - name: upload
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -#T $ISO https://transfer.sh/$ISO
+        curl -#T $ISO https://transfer.hx0i.xyz/$ISO
