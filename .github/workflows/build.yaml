@@ -9,6 +9,10 @@ on:
         description: 'uup app (uupdump/uuprg)'
         required: true
         default: 'uupdump'
+      Max-Days:
+        description: 'upload max days'
+        required: true
+        default: '14'
 
 jobs:
   build:
@@ -38,8 +42,9 @@ jobs:
         Move-Item $ISO $PATH
     - name: out iso version
       run: |
-        Get-ChildItem *.ISO -Name
+        $ISO=Get-ChildItem *.ISO -Name
+        echo $ISO | Get-ChildItem | % {[int]($_.length / 1MB)} | echo MB
     - name: upload
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -#T $ISO https://transfer.hx0i.xyz/$ISO
+        curl -sD - -T $ISO https://transfer.hx0i.xyz/$ISO -H "Max-Days: ${{ github.event.inputs.Max-Days }}"
