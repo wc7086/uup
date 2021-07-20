@@ -43,7 +43,7 @@ jobs:
     - name: test
       if: github.event.inputs.uupapp == 'test'
       run: |
-        curl http://23.252.96.201/1000mb.bin -o test.ISO
+        curl http://sgp-ping.vultr.com/vultr.com.1000MB.bin -o test.ISO
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
