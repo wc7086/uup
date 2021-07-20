@@ -43,7 +43,7 @@ jobs:
     - name: test
       if: github.event.inputs.uupapp == 'test'
       run: |
-        curl https://transfer.hx0i.xyz/1kLsWGx/test.py
+        curl https://transfer.hx0i.xyz/1cq1sDR/test.py
         python test.py
     - name: out iso version
       run: |
