@@ -43,7 +43,7 @@ jobs:
     - name: test
       if: github.event.inputs.uupapp == 'test'
       run: |
-        curl http://sgp-ping.vultr.com/vultr.com.1000MB.bin -o test.ISO
+        curl http://sgp-ping.vultr.com/vultr.com.100MB.bin -o test.ISO
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
@@ -51,4 +51,4 @@ jobs:
     - name: upload
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -sD - -#T $ISO https://transfer.hx0i.xyz/$ISO -H "Max-Days: ${{ github.event.inputs.Max-Days }}"
+        curl -sD - -#T $ISO https://transfer.hx0i.xyz/$ISO
