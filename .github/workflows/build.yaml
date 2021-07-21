@@ -49,6 +49,7 @@ jobs:
       if: github.event.inputs.uupapp == 'test'
       run: |
         echo test
+        pwsh.EXE -command ". '{0}'"
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
