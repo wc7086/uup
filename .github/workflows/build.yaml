@@ -48,6 +48,7 @@ jobs:
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
+        echo $ISO
         (Get-Item $ISO).Length/1MB
     - name: upload
       run: |
