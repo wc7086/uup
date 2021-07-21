@@ -45,11 +45,6 @@ jobs:
         echo 0 | .\uup.cmd
         $ISO=Get-ChildItem *.ISO -Name
         Move-Item $ISO $PATH
-    - name: test
-      if: github.event.inputs.uupapp == 'test'
-      run: |
-        echo test
-        pwsh.EXE -command ". '{0}'"
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
