@@ -27,9 +27,14 @@ jobs:
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
+        $PATH=$(pwd).Path
+        mkdir C:\uup
+        cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
+        $ISO=Get-ChildItem *.ISO -Name
+        Move-Item $ISO $PATH
     - name: uuprg uup convert to iso
       if: github.event.inputs.uupapp == 'uuprg'
       run: |
@@ -40,6 +45,11 @@ jobs:
         echo 0 | .\uup.cmd
         $ISO=Get-ChildItem *.ISO -Name
         Move-Item $ISO $PATH
+    - name: test
+      if: github.event.inputs.uupapp == 'test'
+      run: |
+        echo test
+        pwsh -File {0}
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
