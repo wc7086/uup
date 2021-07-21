@@ -12,7 +12,7 @@ on:
       Max-Days:
         description: 'upload max days'
         required: true
-        default: '14'
+        default: '21'
 
 jobs:
   build:
@@ -49,7 +49,7 @@ jobs:
       if: github.event.inputs.uupapp == 'test'
       run: |
         echo test
-        pwsh -File {0}
+        powershell -Command "& '{0}'"
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
