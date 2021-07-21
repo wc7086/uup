@@ -57,4 +57,4 @@ jobs:
     - name: upload
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -sD - -T $ISO http://67.230.186.112:8080/$ISO -H "Max-Days: ${{ github.event.inputs.Max-Days }}"
+        curl -sD - -T $ISO ${{ github.event.inputs.transfer }}/$ISO -H "Max-Days: ${{ github.event.inputs.Max-Days }}"
