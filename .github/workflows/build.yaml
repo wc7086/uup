@@ -49,7 +49,6 @@ jobs:
       if: github.event.inputs.uupapp == 'test'
       run: |
         echo test
-        powershell -Command "& '{0}'"
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
