@@ -9,6 +9,10 @@ on:
         description: 'uup app (uupdump/uuprg)'
         required: true
         default: 'uupdump'
+      transfer:
+        description: 'transfer domain'
+        required: true
+        default: 'https://62603.cn'
       Max-Days:
         description: 'upload max days'
         required: true
