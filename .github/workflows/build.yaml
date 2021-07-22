@@ -52,7 +52,7 @@ jobs:
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        echo $ISO
+        Get-FileHash $ISO -Algorithm SHA1| Format-List
         (Get-Item $ISO).Length/1MB
     - name: upload
       run: |
