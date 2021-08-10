@@ -15,8 +15,8 @@ on:
         default: 'https://62603.cn'
       Max-Days:
         description: 'upload max days'
-        required: true
-        default: '21'
+        required: false
+        default: ''
 
 jobs:
   build:
