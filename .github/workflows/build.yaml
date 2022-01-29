@@ -12,7 +12,7 @@ on:
       transfer:
         description: 'transfer domain'
         required: true
-        default: 'https://62603.cn'
+        default: 'https://transfer.sh/'
       Max-Days:
         description: 'upload max days'
         required: false
@@ -57,4 +57,4 @@ jobs:
     - name: upload
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -sD - -T $ISO ${{ github.event.inputs.transfer }}/$ISO -H "Max-Days: ${{ github.event.inputs.Max-Days }}"
+        curl -sD - -T $ISO ${{ github.event.inputs.transfer }}$ISO -H "Max-Days: ${{ github.event.inputs.Max-Days }}"
