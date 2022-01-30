@@ -60,6 +60,7 @@ jobs:
         curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" --upload-file $ISO ${{ github.event.inputs.transfer }}$ISO
     - name: upload to onedrive
       run: |
+        mkdir -p $ENV:APPDATA\rclone
         curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
         $ISO=Get-ChildItem *.ISO -Name
         echo "[onedrive]" >> $ENV:APPDATA\rclone\rclone.conf
