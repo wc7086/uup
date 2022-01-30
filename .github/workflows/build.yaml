@@ -67,6 +67,7 @@ jobs:
     - name: upload to onedrive
       run: |
         curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
+        mkdir -p $ENV:APPDATA/rclone
         $ISO=Get-ChildItem *.ISO -Name
         echo "[onedrive]" >> $ENV:APPDATA/rclone/rclone.conf
         echo "type = onedrive" >> $ENV:APPDATA/rclone/rclone.conf
