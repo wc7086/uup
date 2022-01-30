@@ -74,6 +74,9 @@ jobs:
       steps:
       - name: Installation dependencies
         run: |
+          curl https://rclone.org/install.sh | sudo bash
+      - name: upload to OneDrive
+        run: |
           curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
           rclone touch
           echo "${{ secrets.RCLONE_CONFIG }}" >> $(rclone config file)
