@@ -56,4 +56,4 @@ jobs:
         mkdir -p $ENV:APPDATA\rclone
         echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
         $ISO=Get-ChildItem *.ISO -Name
-        rclone copy $ISO "onedrive:/Public/os/windows"
+        rclone copy $ISO "onedrive:/Public/os/windows" -P
