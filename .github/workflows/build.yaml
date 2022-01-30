@@ -25,7 +25,6 @@ jobs:
     - name: Installation dependencies
       run: |
         choco install curl
-        choco install rclone
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
@@ -59,6 +58,7 @@ jobs:
         $ISO=Get-ChildItem *.ISO -Name
         curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" --upload-file $ISO ${{ github.event.inputs.transfer }}$ISO
     - name: upload to onedrive
+      if: ${{ false }}
       run: |
         $PWD=$(Pwd).Path
         rclone touch
@@ -69,3 +69,15 @@ jobs:
         rclone config show
         rclone -V
         rclone copy $PWD\os "onedrive:/Public/os/windows"
+  uploadToOneDrive:
+      runs-on: ubuntu-latest
+      steps:
+      - name: Installation dependencies
+        run: |
+          curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
+          rclone touch
+          echo "${{ secrets.RCLONE_CONFIG }}" >> $(rclone config file)
+          rclone config show
+          rclone -V
+          rclone copy 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO "onedrive:/Public/os/windows"
+          
