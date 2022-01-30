@@ -78,7 +78,7 @@ jobs:
       - name: upload to OneDrive
         run: |
           touch 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
-          echo "${{ secrets.RCLONE_CONFIG }}" >> $(rclone config file)
+          echo "${{ secrets.RCLONE_CONFIG }}" >> ${rclone config file}
           rclone config show
           rclone -V
           rclone copy 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO "onedrive:/Public/os/windows"
