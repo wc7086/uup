@@ -29,24 +29,24 @@ jobs:
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
-        $PATH=$(Pwd).Path
+        $PWD=$(Pwd).Path
         mkdir C:\uup
         cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
         $ISO=Get-ChildItem *.ISO -Name
-        Move-Item $ISO $PATH
+        Move-Item $ISO $PATH\os
     - name: uuprg uup convert to iso
       if: github.event.inputs.uupapp == 'uuprg'
       run: |
-        $PATH=$(Pwd).Path
+        $PWD=$(Pwd).Path
         mkdir C:\uup
         cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.cmd
         echo 0 | .\uup.cmd
         $ISO=Get-ChildItem *.ISO -Name
-        Move-Item $ISO $PATH
+        Move-Item $ISO $PATH\os
     - name: out iso version
       if: ${{ false }}
       run: |
@@ -60,9 +60,11 @@ jobs:
         curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" --upload-file $ISO ${{ github.event.inputs.transfer }}$ISO
     - name: upload to onedrive
       run: |
+        $PWD=$(Pwd).Path
         mkdir -p $ENV:APPDATA\rclone
         curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
         $ISO=Get-ChildItem *.ISO -Name
+        Move-Item $ISO $PWD\os
         echo "[onedrive]" >> $ENV:APPDATA\rclone\rclone.conf
         echo "type = onedrive" >> $ENV:APPDATA\rclone\rclone.conf
         echo "client_id=${{ secrets.RCLONE_ONEDRIVE_CLIENT_ID }}" >> $ENV:APPDATA\rclone\rclone.conf
