@@ -67,4 +67,5 @@ jobs:
         Move-Item $ISO $PWD\os
         echo "${{ secrets.RCLONE_CONFIG }}" >> $ENV:APPDATA\rclone\rclone.conf
         rclone config show
-        rclone copy $PWD\os "onedrive:/Public/os/windows" --copy-links
+        rclone -V
+        rclone copy $PWD\os "onedrive:/Public/os/windows"
