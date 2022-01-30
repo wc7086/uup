@@ -62,27 +62,8 @@ jobs:
       run: |
         $PWD=$(Pwd).Path
         mkdir -p $ENV:APPDATA\rclone
-        # curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
-        echo "a" > 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
+        curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
         $ISO=Get-ChildItem *.ISO -Name
         Move-Item $ISO $PWD\os
         echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
-        rclone config show
-        rclone -V
-        rclone copy $PWD\os "onedrive:/Public/os/windows"
-  uploadToOneDrive:
-      if: ${{ false }}
-      runs-on: ubuntu-latest
-      steps:
-      - name: Installation dependencies
-        run: |
-          curl https://rclone.org/install.sh | sudo bash
-      - name: upload to OneDrive
-        run: |
-          touch 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
-          mkdir -p ~/.config/rclone
-          echo "${{ secrets.RCLONE_CONFIG }}" >> ~/.config/rclone/rclone.conf
-          rclone config show
-          rclone -V
-          rclone copy 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO "onedrive:/Public/os/windows"
-          
+        rclone copy $PWD\os\ "onedrive:/Public/os/windows"
