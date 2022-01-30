@@ -28,10 +28,15 @@ jobs:
         unzip -oq curl.zip
         $tmp=Get-ChildItem curl*mingw -Name
         Set-Alias curl $tmp\bin\curl.exe
+        curl https://downloads.rclone.org/v1.57.0/rclone-v1.57.0-windows-amd64.zip -o rclone.zip
+        unzip -oq rclone.zip
+        $tmp=Get-ChildItem rclone*amd64 -Name
+        Set-Alias rclone $tmp\rclone.exe
+        rclone config file
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
-        $PATH=$(pwd).Path
+        $PATH=$(Pwd).Path
         mkdir C:\uup
         cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
@@ -42,7 +47,7 @@ jobs:
     - name: uuprg uup convert to iso
       if: github.event.inputs.uupapp == 'uuprg'
       run: |
-        $PATH=$(pwd).Path
+        $PATH=$(Pwd).Path
         mkdir C:\uup
         cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.cmd
@@ -50,11 +55,15 @@ jobs:
         $ISO=Get-ChildItem *.ISO -Name
         Move-Item $ISO $PATH
     - name: out iso version
+      if: ${{ false }}
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
         (Get-Item $ISO).Length/1MB
     - name: upload to transfer.sh
+      if: ${{ false }}
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" --upload-file $ISO ${{ github.event.inputs.transfer }}$ISO
+    - name: upload to onedrive
+      run: ./
