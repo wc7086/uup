@@ -27,7 +27,7 @@ jobs:
         Set-ExecutionPolicy RemoteSigned -scope CurrentUser
         Invoke-Expression (New-Object System.Net.WebClient).DownloadString('https://get.scoop.sh')
         scoop install curl
-        scoop install clone
+        scoop install rclone
         New-Item -Path $Profile -Type File -Force
         echo "Remove-Item alias:curl" >> $profile
     - name: uupdump uup convert to iso
