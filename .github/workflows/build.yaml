@@ -20,12 +20,12 @@ on:
 
 jobs:
   build:
-    runs-on: windows-latest
+    runs-on: windows-2022
     steps:
     - name: Installation dependencies
       run: |
         choco install curl
-        #choco install rclone
+        choco install rclone
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
@@ -61,11 +61,6 @@ jobs:
     - name: upload to onedrive
       run: |
         $PWD=$(Pwd).Path
-        curl https://downloads.rclone.org/v1.57.0/rclone-v1.57.0-windows-amd64.zip -o rclone.zip
-        unzip -oq rclone.zip
-        $tmp=Get-ChildItem rclone*amd64 -Name
-        Set-Alias rclone $tmp\rclone.exe
-        rclone config file
         rclone touch
         curl https://transfer.sh/eOWlII/22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO -o 22543.1000.220122-2315.RS_PRERELEASE_CLIENTPRO_OEMRET_X64FRE_ZH-CN.ISO
         $ISO=Get-ChildItem *.ISO -Name
