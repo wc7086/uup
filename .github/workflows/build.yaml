@@ -25,6 +25,7 @@ jobs:
     - name: Installation dependencies
       run: |
         choco install curl
+        choco install rclone
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
