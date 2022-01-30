@@ -72,4 +72,4 @@ jobs:
         echo "token=${{ secrets.RCLONE_ONEDRIVE_TOKEN }}" >> $ENV:APPDATA\rclone\rclone.conf
         echo "drive_id=${{ secrets.RCLONE_ONEDRIVE_DRIVE_ID }}" >> $ENV:APPDATA\rclone\rclone.conf
         echo "drive_type=business" >> $ENV:APPDATA\rclone\rclone.conf
-        rclone copy $PWD\os "onedrive:/Public/os/windows"
+        rclone copy $PWD\os "onedrive:/Public/os/windows" --copy-links
