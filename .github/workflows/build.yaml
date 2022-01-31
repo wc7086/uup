@@ -26,10 +26,11 @@ jobs:
         working-directory: C:\uup
     steps:
     - name: Installation dependencies
+      working-directory: .\
       run: |
         choco install curl
         choco install rclone
-        curl -V
+        mkdir -p C:\uup
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
