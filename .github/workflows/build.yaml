@@ -37,7 +37,7 @@ jobs:
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
         $ISO=Get-ChildItem *.ISO -Name
-        Move-Item $ISO $PATH
+        Move-Item $ISO $PWD
     - name: uuprg uup convert to iso
       if: github.event.inputs.uupapp == 'uuprg'
       run: |
@@ -47,7 +47,7 @@ jobs:
         curl "${{ github.event.inputs.uupurl }}" -o uup.cmd
         echo 0 | .\uup.cmd
         $ISO=Get-ChildItem *.ISO -Name
-        Move-Item $ISO $PATH
+        Move-Item $ISO $PWD
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
