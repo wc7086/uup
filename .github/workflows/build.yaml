@@ -21,6 +21,9 @@ on:
 jobs:
   build:
     runs-on: windows-2022
+    defaults:
+      run:
+        working-directory: C:\uup
     steps:
     - name: Installation dependencies
       run: |
@@ -30,24 +33,14 @@ jobs:
     - name: uupdump uup convert to iso
       if: github.event.inputs.uupapp == 'uupdump'
       run: |
-        $PWD=$(Pwd).Path
-        mkdir C:\uup
-        cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
-        $ISO=Get-ChildItem *.ISO -Name
-        Move-Item $ISO $PWD
     - name: uuprg uup convert to iso
       if: github.event.inputs.uupapp == 'uuprg'
       run: |
-        $PWD=$(Pwd).Path
-        mkdir C:\uup
-        cd C:\uup
         curl "${{ github.event.inputs.uupurl }}" -o uup.cmd
         echo 0 | .\uup.cmd
-        $ISO=Get-ChildItem *.ISO -Name
-        Move-Item $ISO $PWD
     - name: out iso version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
