@@ -51,7 +51,7 @@ jobs:
     - name: upload to transfer.sh
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl --upload-file -H "Max-Days: ${{ github.event.inputs.Max-Days }}" $ISO ${{ github.event.inputs.transfer }}
+        curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" --upload-file $ISO ${{ github.event.inputs.transfer }}
     - name: upload to onedrive
       run: |
         mkdir -p $ENV:APPDATA\rclone
