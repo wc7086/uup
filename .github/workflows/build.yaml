@@ -7,6 +7,7 @@ on:
         required: true
       uupapp:
         description: 'uup script'
+        type: choice
         options:
           - uupdump.net
           - uup.rg-adguard.net
