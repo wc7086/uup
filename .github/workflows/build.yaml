@@ -2,23 +2,29 @@ name: Build Windows iso
 on:
   workflow_dispatch:
     inputs:
-      uupurl:
-        description: 'uup script url'
+      UUPUrl:
+        description: 'UUP script download url'
         required: true
-      uupapp:
-        description: 'uup script'
+      UUPScript:
+        description: 'UUP script'
+        required: true
+        default: 'uupdump.net'
         type: choice
         options:
           - uupdump.net
           - uup.rg-adguard.net
-      transfer:
-        description: 'transfer domain'
+      transferDomain:
+        description: 'Transfer domain'
         required: true
         default: 'https://transfer.sh/'
       Max-Days:
-        description: 'upload max days'
+        description: 'Transfer upload max days'
         required: false
         default: ''
+      uploadToOneDrive:
+        description: 'Upload to OneDrive'
+        required: false
+        type: boolean
 
 jobs:
   build:
@@ -33,28 +39,29 @@ jobs:
         choco install curl
         choco install rclone
         mkdir -p C:\uup
-    - name: uupdump uup convert to iso
-      if: github.event.inputs.uupapp == 'uupdump.net'
+    - name: uupdump.net UUP convert to ISO
+      if: github.event.inputs.UUPScript == 'uupdump.net'
       run: |
-        curl "${{ github.event.inputs.uupurl }}" -o uup.zip
+        curl "${{ github.event.inputs.UUPUrl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
-    - name: uuprg uup convert to iso
-      if: github.event.inputs.uupapp == 'uup.rg-adguard.net'
+    - name: uup.rg-adguard.net UUP convert to ISO
+      if: github.event.inputs.UUPScript == 'uup.rg-adguard.net'
       run: |
-        curl "${{ github.event.inputs.uupurl }}" -o uup.cmd
+        curl "${{ github.event.inputs.UUPUrl }}" -o uup.cmd
         echo 0 | .\uup.cmd
-    - name: out iso version
+    - name: output ISO version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
         (Get-Item $ISO).Length/1MB
-    - name: upload to transfer.sh
+    - name: Upload ISO to transfer.sh
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" -sT $ISO ${{ github.event.inputs.transfer }}
-    - name: upload to onedrive
+        curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" -sT $ISO ${{ github.event.inputs.transferDomain }}
+    - name: Upload ISO to onedrive
       run: |
+        if: github.event.inputs.uploadToOneDrive = True
         mkdir -p $ENV:APPDATA\rclone
         echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
         $ISO=Get-ChildItem *.ISO -Name
