@@ -23,7 +23,7 @@ on:
         default: ''
       uploadToOneDrive:
         description: 'Upload to OneDrive'
-        required: false
+        required: true
         type: boolean
 
 jobs:
