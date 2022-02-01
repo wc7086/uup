@@ -13,6 +13,11 @@ on:
         options:
           - uupdump.net
           - uup.rg-adguard.net
+      uploadTransfer:
+        description: 'Upload to Transfer'
+        required: false
+        default: 'true'
+        type: boolean
       transferDomain:
         description: 'Transfer domain'
         required: true
