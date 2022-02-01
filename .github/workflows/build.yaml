@@ -23,7 +23,8 @@ on:
         default: ''
       uploadToOneDrive:
         description: 'Upload to OneDrive'
-        required: true
+        required: false
+        default: 'true'
         type: boolean
 
 jobs:
@@ -61,7 +62,7 @@ jobs:
         curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" -sT $ISO ${{ github.event.inputs.transferDomain }}
     - name: Upload ISO to onedrive
       run: |
-        if: github.event.inputs.uploadToOneDrive = True
+        if: github.event.inputs.uploadToOneDrive = true
         mkdir -p $ENV:APPDATA\rclone
         echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
         $ISO=Get-ChildItem *.ISO -Name
