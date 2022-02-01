@@ -62,12 +62,13 @@ jobs:
         Get-FileHash $ISO -Algorithm SHA1| Format-List
         (Get-Item $ISO).Length/1MB
     - name: Upload ISO to transfer.sh
+      if: github.event.inputs.uploadTransfer = true
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" -sT $ISO ${{ github.event.inputs.transferDomain }}
     - name: Upload ISO to onedrive
+      if: github.event.inputs.uploadToOneDrive = true
       run: |
-        if: github.event.inputs.uploadToOneDrive = true
         mkdir -p $ENV:APPDATA\rclone
         echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
         $ISO=Get-ChildItem *.ISO -Name
