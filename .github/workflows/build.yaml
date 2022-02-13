@@ -13,9 +13,10 @@ on:
         options:
           - uupdump.net
           - uup.rg-adguard.net
+          - test
       uploadTransfer:
         description: 'Upload to Transfer'
-        required: false
+        required: true
         default: 'true'
         type: boolean
       transferDomain:
@@ -28,7 +29,7 @@ on:
         default: ''
       uploadToOneDrive:
         description: 'Upload to OneDrive'
-        required: false
+        required: true
         default: 'true'
         type: boolean
 
@@ -56,6 +57,10 @@ jobs:
       run: |
         curl "${{ github.event.inputs.UUPUrl }}" -o uup.cmd
         echo 0 | .\uup.cmd
+    - name: test
+      if: github.event.inputs.UUPScript == 'test'
+      run: |
+        fsutil file createnew test.ISO 1024
     - name: output ISO version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
