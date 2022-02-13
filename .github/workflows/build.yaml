@@ -13,7 +13,6 @@ on:
         options:
           - uupdump.net
           - uup.rg-adguard.net
-          - test
       uploadTransfer:
         description: 'Upload to Transfer'
         required: false
@@ -57,21 +56,17 @@ jobs:
       run: |
         curl "${{ github.event.inputs.UUPUrl }}" -o uup.cmd
         echo 0 | .\uup.cmd
-    - name: test
-      if: github.event.inputs.UUPScript == 'test'
-      run: |
-        fsutil file createnew test.ISO 1024
     - name: output ISO version
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
         (Get-Item $ISO).Length/1MB
-    - name: Upload ISO to transfer.sh
+    - name: Upload ISO to Transfer
       if: github.event.inputs.uploadTransfer == 'true'
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" -sT $ISO ${{ github.event.inputs.transferDomain }}
-    - name: Upload ISO to onedrive
+    - name: Upload ISO to OneDrive
       if: github.event.inputs.uploadToOneDrive == 'true'
       run: |
         mkdir -p $ENV:APPDATA\rclone
