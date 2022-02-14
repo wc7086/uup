@@ -65,7 +65,7 @@ jobs:
       if: github.event.inputs.uploadTransfer == 'true'
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -H "Max-Days: ${{ github.event.inputs.Max-Days }}" -sT $ISO ${{ github.event.inputs.transferDomain }}
+        curl -H 'Max-Days: ${{ github.event.inputs.Max-Days }}' -sT $ISO '${{ github.event.inputs.transferDomain }}'
     - name: Upload ISO to OneDrive
       if: github.event.inputs.uploadToOneDrive == 'true'
       run: |
