@@ -48,13 +48,13 @@ jobs:
     - name: uupdump.net UUP convert to ISO
       if: github.event.inputs.UUPScript == 'uupdump.net'
       run: |
-        curl "${{ github.event.inputs.UUPUrl }}" -o uup.zip
+        curl -L "${{ github.event.inputs.UUPUrl }}" -o uup.zip
         unzip -oq uup.zip
         echo 0 | .\uup_download_windows.cmd
     - name: uup.rg-adguard.net UUP convert to ISO
       if: github.event.inputs.UUPScript == 'uup.rg-adguard.net'
       run: |
-        curl "${{ github.event.inputs.UUPUrl }}" -o uup.cmd
+        curl -L "${{ github.event.inputs.UUPUrl }}" -o uup.cmd
         echo 0 | .\uup.cmd
     - name: output ISO version
       run: |
