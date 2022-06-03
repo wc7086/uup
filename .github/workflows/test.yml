@@ -1,0 +1,64 @@
+name: Build Windows iso
+on:
+  workflow_dispatch:
+    inputs:
+      UUPUrl:
+        description: 'UUP script download url'
+        required: true
+      UUPScript:
+        description: 'UUP script'
+        required: true
+        default: 'uupdump.net'
+        type: choice
+        options:
+          - uupdump.net
+          - uup.rg-adguard.net
+      uploadTransfer:
+        description: 'Upload to Transfer'
+        required: false
+        default: 'true'
+        type: boolean
+      transferDomain:
+        description: 'Transfer domain'
+        required: true
+        default: 'https://transfer.sh/'
+      Max-Days:
+        description: 'Transfer upload max days'
+        required: false
+        default: ''
+      uploadToOneDrive:
+        description: 'Upload to OneDrive'
+        required: false
+        default: 'true'
+        type: boolean
+
+jobs:
+  build:
+    runs-on: windows-2022
+    defaults:
+      run:
+        working-directory: C:\uup
+    steps:
+    - name: Installation dependencies
+      working-directory: .\
+      run: |
+        choco install --yes --no-progress curl rclone
+        mkdir -p C:\uup
+    - name: output ISO version
+      run: |
+        touch test.ISO
+        $ISO=Get-ChildItem *.ISO -Name
+        Get-FileHash $ISO -Algorithm SHA1| Format-List
+        (Get-Item $ISO).Length/1MB
+    - name: Upload ISO to Transfer
+      if: github.event.inputs.uploadTransfer == 'true'
+      run: |
+        $ISO=Get-ChildItem *.ISO -Name
+        curl -H 'Max-Days: ${{ github.event.inputs.Max-Days }}' -sT $ISO '${{ github.event.inputs.transferDomain }}'
+    - name: Upload ISO to OneDrive
+      if: github.event.inputs.uploadToOneDrive == 'true'
+      run: |
+        mkdir -p $ENV:APPDATA\rclone
+        echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
+        $ISO=Get-ChildItem *.ISO -Name
+        rclone copy $ISO "onedrive:/Public/os/windows" -P
