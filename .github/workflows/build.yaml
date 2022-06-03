@@ -42,8 +42,7 @@ jobs:
     - name: Installation dependencies
       working-directory: .\
       run: |
-        choco install curl
-        choco install rclone
+        choco install --yes --no-progress curl rclone
         mkdir -p C:\uup
     - name: uupdump.net UUP convert to ISO
       if: github.event.inputs.UUPScript == 'uupdump.net'
