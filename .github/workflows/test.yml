@@ -13,8 +13,8 @@ on:
         options:
           - uupdump.net
           - uup.rg-adguard.net
-      uploadCowtransfer:
-        description: 'Upload to Cowtransfer'
+      uploadWenshushu:
+        description: 'Upload to wenshushu'
         required: false
         default: 'false'
         type: boolean
@@ -51,20 +51,18 @@ jobs:
         mkdir -p C:\uup
     - name: output ISO version
       run: |
-        touch test.ISO
+        fsutil file createnew test.ISO 4000000000
         $ISO=Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
         (Get-Item $ISO).Length/1MB
-    - name: Upload firmware to cowtransfer
-      id: cowtransfer
-      if: github.event.inputs.uploadCowtransfer == 'true'
+    - name: Upload firmware to wenshushu
+      id: wenshushu
+      if: github.event.inputs.uploadWenshushu == 'true'
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         curl -L "https://github.com/Mikubill/transfer/releases/download/v0.4.17/transfer_0.4.17_windows_amd64.zip" -o "cow.zip"
         unzip -oq cow.zip
-        ./transfer.exe cow --cookie="remember-mev2=${{ secrets.COW_REMEMBER_MEV2 }};" -a="${{ secrets.COW_AUTH_TOKEN }}" -p 64 --no-progress $ISO 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        echo "name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
+        ./transfer.exe wenshushu -p 64 --no-progress $ISO
     - name: Upload ISO to Transfer
       if: github.event.inputs.uploadTransfer == 'true'
       run: |
