@@ -50,11 +50,11 @@ jobs:
         choco install --yes --no-progress curl rclone
         mkdir -p C:\uup
     - name: uupdump.net UUP convert to ISO
-      shell: pwsh
       if: github.event.inputs.UUPScript == 'uupdump.net'
       run: |
         curl -L "${{ github.event.inputs.UUPUrl }}" -o uup.zip
         unzip -oq uup.zip
+        Get-FileHash
         echo 0 | .\uup_download_windows.cmd
     - name: uup.rg-adguard.net UUP convert to ISO
       if: github.event.inputs.UUPScript == 'uup.rg-adguard.net'
