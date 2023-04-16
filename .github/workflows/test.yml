@@ -2,17 +2,6 @@ name: upload test
 on:
   workflow_dispatch:
     inputs:
-      UUPUrl:
-        description: 'UUP script download url'
-        required: true
-      UUPScript:
-        description: 'UUP script'
-        required: true
-        default: 'uupdump.net'
-        type: choice
-        options:
-          - uupdump.net
-          - uup.rg-adguard.net
       uploadWenshushu:
         description: 'Upload to wenshushu'
         required: false
