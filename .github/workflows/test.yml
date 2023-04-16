@@ -70,7 +70,7 @@ jobs:
         $ISO=Get-ChildItem *.ISO -Name
         curl -L "https://github.com/Mikubill/transfer/releases/download/v0.4.17/transfer_0.4.17_windows_amd64.zip" -o "cow.zip"
         unzip -oq cow.zip
-        ./transfer.exe cow --cokie="remember-mev2=${{ github.event.inputs.remember-mev2 }};" -a="${{ github.event.inputs.cow-auth-token }}" -p 64 --no-progress $ISO 2>&1 | tee cowtransfer.log
+        ./transfer.exe cow --cookie="remember-mev2=${{ github.event.inputs.remember-mev2 }};" -a="${{ github.event.inputs.cow-auth-token }}" -p 64 --no-progress $ISO 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
         echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
     - name: Upload ISO to Transfer
