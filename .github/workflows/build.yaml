@@ -51,6 +51,7 @@ jobs:
         mkdir -p C:\uup
     - name: uupdump.net UUP convert to ISO
       if: github.event.inputs.UUPScript == 'uupdump.net'
+      shell: cmd
       run: |
         curl -L "${{ github.event.inputs.UUPUrl }}" -o uup.zip
         unzip -oq uup.zip
