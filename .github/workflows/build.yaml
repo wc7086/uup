@@ -16,7 +16,7 @@ on:
       uploadWenshushu:
         description: 'Upload to wenshushu'
         required: false
-        default: 'true'
+        default: true
         type: boolean
 #      uploadTransfer:
 #        description: 'Upload to Transfer'
@@ -55,7 +55,6 @@ jobs:
       run: |
         curl -L "${{ github.event.inputs.UUPUrl }}" -o uup.zip
         unzip -oq uup.zip
-        powershell -NoProfile -ExecutionPolicy Unrestricted .\files\depends_win.ps1 || (pause & exit /b 1)
         echo 0 | .\uup_download_windows.cmd
     - name: uup.rg-adguard.net UUP convert to ISO
       if: github.event.inputs.UUPScript == 'uup.rg-adguard.net'
