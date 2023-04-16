@@ -64,7 +64,7 @@ jobs:
         unzip -oq cow.zip
         ./transfer.exe cow --cookie="remember-mev2=${{ secrets.COW_REMEMBER_MEV2 }};" -a="${{ secrets.COW_AUTH_TOKEN }}" -p 64 --no-progress $ISO 2>&1 | tee cowtransfer.log
         echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
+        echo "name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")" >> $GITHUB_OUTPUT
     - name: Upload ISO to Transfer
       if: github.event.inputs.uploadTransfer == 'true'
       run: |
