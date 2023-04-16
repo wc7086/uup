@@ -18,14 +18,6 @@ on:
         required: false
         default: 'false'
         type: boolean
-      remember-mev2:
-        description: 'remember-mev2'
-        required: true
-        default: ''
-      cow-auth-token:
-        description: 'cow-auth-token'
-        required: true
-        default: ''
       uploadTransfer:
         description: 'Upload to Transfer'
         required: false
