@@ -13,37 +13,29 @@ on:
         options:
           - uupdump.net
           - uup.rg-adguard.net
-      uploadCowtransfer:
-        description: 'Upload to Cowtransfer'
+      uploadWenshushu:
+        description: 'Upload to wenshushu'
         required: false
-        default: 'false'
+        default: 'true'
         type: boolean
-      remember-mev2:
-        description: 'remember-mev2'
-        required: true
-        default: ''
-      cow-auth-token:
-        description: 'cow-auth-token'
-        required: true
-        default: ''
-      uploadTransfer:
-        description: 'Upload to Transfer'
-        required: false
-        default: 'false'
-        type: boolean
-      transferDomain:
-        description: 'Transfer domain'
-        required: true
-        default: 'https://transfer.sh/'
-      Max-Days:
-        description: 'Transfer upload max days'
-        required: false
-        default: ''
-      uploadToOneDrive:
-        description: 'Upload to OneDrive'
-        required: false
-        default: 'false'
-        type: boolean
+#      uploadTransfer:
+#        description: 'Upload to Transfer'
+#        required: false
+#        default: 'false'
+#        type: boolean
+#      transferDomain:
+#        description: 'Transfer domain'
+#        required: true
+#        default: 'https://transfer.sh/'
+#      Max-Days:
+#        description: 'Transfer upload max days'
+#        required: false
+#        default: ''
+#      uploadToOneDrive:
+#        description: 'Upload to OneDrive'
+#        required: false
+#        default: 'false'
+#        type: boolean
 
 jobs:
   build:
@@ -73,24 +65,23 @@ jobs:
         $ISO=Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
         (Get-Item $ISO).Length/1MB
-    - name: Upload firmware to cowtransfer
-      id: cowtransfer
-      if: github.event.inputs.uploadCowtransfer == 'true'
+    - name: Upload firmware to wenshushu
+      id: wenshushu
+      if: github.event.inputs.uploadWenshushu == 'true'
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -fsSL git.io/file-transfer | sh
-        ./transfer cow --cokie="remember-mev2=${{ github.event.inputs.remember-mev2 }};" -a="${{ github.event.inputs.cow-auth-token }}" -p 64 --no-progress $ISO 2>&1 | tee cowtransfer.log
-        echo "::warning file=cowtransfer.com::$(cat cowtransfer.log | grep https)"
-        echo "::set-output name=url::$(cat cowtransfer.log | grep https | cut -f3 -d" ")"
-    - name: Upload ISO to Transfer
-      if: github.event.inputs.uploadTransfer == 'true'
-      run: |
-        $ISO=Get-ChildItem *.ISO -Name
-        curl -H 'Max-Days: ${{ github.event.inputs.Max-Days }}' -sT $ISO '${{ github.event.inputs.transferDomain }}'
-    - name: Upload ISO to OneDrive
-      if: github.event.inputs.uploadToOneDrive == 'true'
-      run: |
-        mkdir -p $ENV:APPDATA\rclone
-        echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
-        $ISO=Get-ChildItem *.ISO -Name
-        rclone copy $ISO "onedrive:/Public/os/windows" -P
+        curl -L "https://github.com/Mikubill/transfer/releases/download/v0.4.17/transfer_0.4.17_windows_amd64.zip" -o "cow.zip"
+        unzip -oq cow.zip
+        ./transfer.exe wenshushu -p 64 --no-progress $ISO
+#    - name: Upload ISO to Transfer
+#      if: github.event.inputs.uploadTransfer == 'true'
+#      run: |
+#        $ISO=Get-ChildItem *.ISO -Name
+#        curl -H 'Max-Days: ${{ github.event.inputs.Max-Days }}' -sT $ISO '${{ github.event.inputs.transferDomain }}'
+#    - name: Upload ISO to OneDrive
+#      if: github.event.inputs.uploadToOneDrive == 'true'
+#      run: |
+#        mkdir -p $ENV:APPDATA\rclone
+#        echo '${{ secrets.RCLONE_CONFIG }}' >> $ENV:APPDATA\rclone\rclone.conf
+#        $ISO=Get-ChildItem *.ISO -Name
+#        rclone copy $ISO "onedrive:/Public/os/windows" -P
