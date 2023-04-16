@@ -54,8 +54,8 @@ jobs:
       run: |
         curl -L "${{ github.event.inputs.UUPUrl }}" -o uup.zip
         unzip -oq uup.zip
-        (Get-FileHash -Path uup.zip -Algorithm SHA256 -ErrorAction Stop).Hash
-        echo 0 | powershell uup_download_windows.cmd
+        .\files\depends_win.ps1 || (pause & exit /b 1)
+        echo 0 | .\uup_download_windows.cmd
     - name: uup.rg-adguard.net UUP convert to ISO
       if: github.event.inputs.UUPScript == 'uup.rg-adguard.net'
       run: |
