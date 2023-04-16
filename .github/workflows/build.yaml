@@ -39,7 +39,7 @@ on:
 
 jobs:
   build:
-    runs-on: windows-2019
+    runs-on: windows-2022
     defaults:
       run:
         working-directory: C:\uup
@@ -50,6 +50,7 @@ jobs:
         choco install --yes --no-progress curl rclone
         mkdir -p C:\uup
     - name: uupdump.net UUP convert to ISO
+      shell: pwsh
       if: github.event.inputs.UUPScript == 'uupdump.net'
       run: |
         curl -L "${{ github.event.inputs.UUPUrl }}" -o uup.zip
