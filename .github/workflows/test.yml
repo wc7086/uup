@@ -49,8 +49,8 @@ jobs:
         mkdir -p C:\uup
     - name: output ISO version
       run: |
-        $iso_size = ${{ github.event.inputs.iso_size }}
-        $iso_bytes = [int64]($iso_size * 1024 * 1024 * 1024)
+        $iso_size = ${{ github.event.inputs.file_size }}
+        $iso_bytes = $iso_size * 1GB
         fsutil file createnew test.ISO $iso_bytes
         $ISO = Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
@@ -65,7 +65,7 @@ jobs:
     - name: Get download link from pixeldrain
       if: steps.pixeldrain.outputs.returncode == '0'
       run: |
-        id=$(echo "${{ steps.pixeldrain.outputs.pixeldrain_response }}" | jq -r '.id')
+        id=$(echo "${{ steps.pixeldrain.outputs.pixeldrain_response }}" | tr -d '\n' | jq -r '.id')
         echo "Download link: https://pixeldrain.com/u/$id"
     - name: Upload firmware to wenshushu
       id: wenshushu
