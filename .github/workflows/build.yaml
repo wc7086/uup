@@ -76,7 +76,12 @@ jobs:
       if: github.event.inputs.uploadPixeldrain == 'true'
       run: |
         $ISO=Get-ChildItem *.ISO -Name
-        curl -T "$ISO" https://pixeldrain.com/api/file/
+        curl -T "$ISO" https://pixeldrain.com/api/file/ > pixeldrain_output.json
+    - name: Get download link from pixeldrain
+      if: steps.pixeldrain.outputs.returncode == '0'
+      run: |
+        $id = Get-Content pixeldrain_output.json | ConvertFrom-Json | Select-Object -ExpandProperty id
+        Write-Output "Download link: https://pixeldrain.com/u/$id"
     - name: Upload firmware to wenshushu
       id: wenshushu
       if: github.event.inputs.uploadWenshushu == 'true'
