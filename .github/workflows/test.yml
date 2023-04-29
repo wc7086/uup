@@ -65,8 +65,8 @@ jobs:
     - name: Get download link from pixeldrain
       if: steps.pixeldrain.outputs.returncode == '0'
       run: |
-        id = $(cat pixeldrain_output.json | jq -r '.id')
-        echo "Download link: https://pixeldrain.com/u/$id/"
+        $id = Get-Content pixeldrain_output.json | ConvertFrom-Json | Select-Object -ExpandProperty id
+        Write-Output "Download link: https://pixeldrain.com/u/$id"
     - name: Upload firmware to wenshushu
       id: wenshushu
       if: github.event.inputs.uploadWenshushu == 'true'
