@@ -50,7 +50,7 @@ jobs:
     - name: output ISO version
       run: |
         $iso_size = ${{ github.event.inputs.file_size }}
-        $iso_bytes = $iso_size * 1GB
+        $iso_bytes = [int64]($iso_size * 1024 * 1024 * 1024)
         fsutil file createnew test.ISO $iso_bytes
         $ISO = Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
