@@ -2,6 +2,10 @@ name: upload test
 on:
   workflow_dispatch:
     inputs:
+      file_size:
+        description: 'file size in GB'
+        default: "0.1"
+        required: true
       uploadPixeldrain:
         description: 'Upload to pixeldrain'
         required: false
@@ -45,16 +49,24 @@ jobs:
         mkdir -p C:\uup
     - name: output ISO version
       run: |
-        fsutil file createnew test.ISO 4000000000
+        $iso_size = ${{ github.event.inputs.iso_size }}
+        $iso_bytes = $iso_size * 1GB
+        fsutil file createnew test.ISO $iso_bytes
         $ISO=Get-ChildItem *.ISO -Name
         Get-FileHash $ISO -Algorithm SHA1| Format-List
-        (Get-Item $ISO).Length/1MB
+        $size = (Get-Item $ISO).Length/1GB
+        Write-Output "ISO file size: $size GB"
     - name: Upload firmware to pixeldrain
       id: pixeldrain
       if: github.event.inputs.uploadPixeldrain == 'true'
       run: |
         $ISO=Get-ChildItem *.ISO -Name
         curl -T "$ISO" https://pixeldrain.com/api/file/
+    - name: Get download link from pixeldrain
+      if: steps.pixeldrain.outputs.returncode == '0'
+      run: |
+        id=$(echo "${{ steps.pixeldrain.outputs.pixeldrain_response }}" | jq -r '.id')
+        echo "Download link: https://pixeldrain.com/u/$id"
     - name: Upload firmware to wenshushu
       id: wenshushu
       if: github.event.inputs.uploadWenshushu == 'true'
