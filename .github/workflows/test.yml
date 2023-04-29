@@ -63,10 +63,9 @@ jobs:
         $ISO=Get-ChildItem *.ISO -Name
         curl -T "$ISO" https://pixeldrain.com/api/file/
     - name: Get download link from pixeldrain
-      if: steps.pixeldrain.outputs.returncode == '0'
+      if: steps.pixeldrain.outputs.id != ''
       run: |
-        id=$(echo "${{ steps.pixeldrain.outputs.pixeldrain_response }}" | tr -d '\n' | jq -r '.id')
-        echo "Download link: https://pixeldrain.com/u/$id"
+        echo "Download link: https://pixeldrain.com/u/${{steps.pixeldrain.outputs.id}}"
     - name: Upload firmware to wenshushu
       id: wenshushu
       if: github.event.inputs.uploadWenshushu == 'true'
